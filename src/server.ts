@@ -1,4 +1,5 @@
 import createApp from './app'
+import { prisma } from './config/db'
 
 const main = async () => {
   const app = await createApp({
@@ -21,6 +22,7 @@ main().catch(async (err) => {
   try {
     /* eslint-disable no-console */
     console.error(`webserver crashed: ${err.stack || err.toString()}`)
+    await prisma.$disconnect()
   } finally {
     process.exit(1)
   }
